@@ -26,6 +26,8 @@ public class Q1 {
 
         if (indexS == S.length()) {
             System.out.println(indexL - 1);
-        } else {            System.out.println(-1);          }
+        } else {
+            System.out.println(-1);
+        }
     }
 }
