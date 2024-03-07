@@ -19,5 +19,47 @@ package C;
 //    输出描述
 //        输出符合要求的单词序列或单词前缀，存在多个时，单词之间以单个空格分割
 
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+
 public class Q45red {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String sentence = "";
+        String prefix = "";
+
+        sentence = scanner.nextLine();
+
+        prefix = scanner.nextLine();
+
+        sentence = sentence.replaceAll("[^a-zA-Z]", " ");                    // 将标点符号替换为空格
+        Set<String> wordSet = new TreeSet<>(); // 存储单词的集合，自动去重且按照字典序排序
+
+
+        String[] words = sentence.split("\\s+");                                      //   “\s”代表一个空白符
+        for (String word : words) {
+            wordSet.add(word);
+        }
+        StringBuilder ans = new StringBuilder();
+        for (String s : wordSet) { // 遍历单词集合
+            if (s.startsWith(prefix)) { // 如果单词以前缀开头
+                ans.append(s).append(" "); // 将单词加入答案字符串
+            }
+        }
+        if (ans.length() > 0) { // 如果答案字符串不为空
+            System.out.println(ans.toString().trim()); // 输出单词序列
+        } else {
+            System.out.println(prefix); // 否则输出前缀
+        }
+
+    }
 }
+
+
+
+
+
+
+
+
