@@ -1,4 +1,4 @@
-package C;
+package C.C100;
 
 import java.util.Scanner;
 
