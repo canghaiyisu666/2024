@@ -21,5 +21,50 @@ package HWOD.C.C100;
 //    输出描述
 //        按照热度降序，输出开源项目的名字，对于热度值相等的，按照项目名字转换为全小写后的字典序排序(a'> 'b'>c>…>X>V>Z)
 
+import java.util.*;
+
 public class Q22blue {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        sc.nextLine();
+
+        int[] quanzhong = new int[5];
+        for (int i = 0; i < 5; i++) {
+            quanzhong[i] = sc.nextInt();
+        }
+        sc.nextLine();
+
+        String[][] xiangmu = new String[N][2];
+
+        for (int i = 0; i < N; i++) {
+            xiangmu[i][0] = sc.next();   //项目名称。
+
+            int hot = 0;
+            for (int j = 0; j < 5; j++) {
+                hot += sc.nextInt() * quanzhong[j];
+            }
+            xiangmu[i][1] = String.valueOf(hot);
+        }
+        sc.close();
+
+        //对项目xiangmu[N][2]进行排序
+        Arrays.sort(xiangmu, new Comparator<String[]>() {
+            @Override
+            public int compare(String[] o1, String[] o2) {
+                int hot1 = Integer.parseInt(o1[1]);
+                int hot2 = Integer.parseInt(o2[1]);
+                if (hot1 != hot2) {
+                    return hot2 - hot1;
+                } else {
+                    return o1[0].toLowerCase().compareTo(o2[0].toLowerCase());
+                }
+            }
+        });
+        for (String[] perXiangmu : xiangmu) {
+            System.out.println(perXiangmu[0]);
+        }
+
+
+    }
 }
