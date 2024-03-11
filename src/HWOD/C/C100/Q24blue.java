@@ -15,5 +15,44 @@ package HWOD.C.C100;
 //        和小明身高差绝对值最大的小朋友排在后面
 //        如果两个小朋友和小明身高差一样，则个子较小的小朋友排在前面。
 
+import java.util.*;
+
 public class Q24blue {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int xiaoming = sc.nextInt();
+        int num = sc.nextInt();
+        sc.nextLine();
+
+        ArrayList<Integer> heights = new ArrayList<Integer>();
+        // 读取其他小朋友的身高并添加到ArrayList中
+        for (int i = 0; i < num; i++) {
+            int height = sc.nextInt();
+            heights.add(height);
+        }
+        sc.close();
+
+        // 对ArrayList中的身高进行排序
+        Collections.sort(heights, new Comparator<Integer>() {
+            // 自定义比较器，根据与小明身高差的绝对值进行排序
+            public int compare(Integer a, Integer b) {
+                int diff_a = Math.abs(a - xiaoming);
+                int diff_b = Math.abs(b - xiaoming);
+                // 如果两个小朋友和小明身高差一样，则个子较小的小朋友排在前面
+                if (diff_a == diff_b) {
+                    return a - b;
+                }
+                // 否则，根据与小明身高差的绝对值进行排序
+                return diff_a - diff_b;
+            }
+        });
+        // 输出排序后的结果
+        for (int i = 0; i < num; i++) {
+            System.out.print(heights.get(i) + " ");
+        }
+    }
 }
+
+
+
+
