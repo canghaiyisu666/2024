@@ -40,6 +40,7 @@ public class Q5 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String in = sc.nextLine();
+        sc.close();
 
         String full = in.split("@")[0];
         String used = in.split("@")[1];
