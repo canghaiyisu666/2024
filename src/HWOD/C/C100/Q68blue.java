@@ -32,9 +32,61 @@ package HWOD.C.C100;
 //              *然后遍历该节点的所有邻接节点(即与当前人员有接触的所有人)，如果邻接节点未被访问，则递归地对邻接节点执行DFS
 //        4.完成DFS后，遍历 visited 数组，统计除确诊病例外的已访问节点的数量，即为需要进行核酸检测的人数。
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class Q68blue {
+
+    public static void dfs(boolean[][] relation, boolean[] result, int first) {
+        result[first] = true;    // 标记当前节点为已访问
+        for (int i = 0; i < relation.length; i++) {
+            // 如果当前节点与其他节点有接触，并且该节点未被访问过
+            if (relation[first][i] == true && !result[i]) {
+                dfs(relation, result, i); // 递归访问该节点
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        int [][] a =new int[100][4];
-        System.out.println(a.length);
+        Scanner scanner = new Scanner(System.in);
+        int N = Integer.parseInt(scanner.nextLine()); // 读取总人数
+        String[] sickList = scanner.nextLine().split(","); // 读取确诊病例人员编号
+        boolean[][] relation = new boolean[N][N]; // 创建接触矩阵
+        boolean[] result = new boolean[N]; // 创建访问记录数组
+
+        // 构建接触矩阵
+        for (int i = 0; i < N; i++) {
+            String[] row = scanner.nextLine().split(",");
+            for (int j = 0; j < N; j++) {
+                relation[i][j] = "1".equals(row[j]); // 将接触情况转换为布尔值存储
+            }
+        }
+        scanner.close();
+
+        // 对每个确诊病例执行深度优先搜索
+        for (String per : sickList) {
+            int index = Integer.parseInt(per);
+            dfs(relation, result, index);
+        }
+
+        int count = 0; // 需要进行核酸检测的人数
+
+        // 遍历访问记录数组，统计需要进行核酸检测的人数
+        for (int i = 0; i < N; i++) {
+            if (result[i]) { // 如果该人员被访问过
+                // 检查该人员是否为确诊病例
+                boolean isConfirmedCase = Arrays.asList(sickList).contains(String.valueOf(i));
+                if (!isConfirmedCase) { // 如果不是确诊病例，则计数器加一
+                    count++;
+                }
+            }
+        }
+
+        System.out.println(count); // 输出需要进行核酸检测的人数
+
     }
 }
+
+
+
+
