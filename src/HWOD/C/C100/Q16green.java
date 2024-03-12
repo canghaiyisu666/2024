@@ -1,10 +1,14 @@
 package HWOD.C.C100;
 
+//  有难度， 没看明白， 先记录。。。？？？？？？？？
 // 游戏分组/王者荣耀 : 深搜
 
 //  题目描述
 //        2020年题:
-//        英雄联盟是一款十分火热的对战类游戏。每一场对战有10位玩家参与，分为两组，每组5人。每位玩家都有一个战斗力，代表着这位玩家的厉害程度。为了对战尽可能精彩，我们需要把玩家们分为实力尽量相等的两组。一组的实力可以表示为这一组5位玩家的战斗力和。现在，给你10位玩家的战斗力，请你把他们分为实力尽量相等的两组。请你输出这两组的实力差。
+//        英雄联盟是一款十分火热的对战类游戏。每一场对战有10位玩家参与，分为两组，每组5人。
+//        每位玩家都有一个战斗力，代表着这位玩家的厉害程度。为了对战尽可能精彩，我们需要把玩家们分为实力尽量相等的两组。
+//        一组的实力可以表示为这一组5位玩家的战斗力和。现在，给你10位玩家的战斗力，请你把他们分为实力尽量相等的两组。
+//        请你输出这两组的实力差。
 //        2023年题:
 //        部门准备举办一场王者荣耀表演赛，有10名游戏爱好者参与，分5为两队，每队5人。
 //        每位参与者都有一个评分，代表着他的游戏水平。为了表演赛尽可能精彩，
@@ -19,5 +23,59 @@ package HWOD.C.C100;
 //    输出描述
 //        1个整数，表示分组后两组实力差绝对值的最小值
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class Q16green {
+
+    static int res = Integer.MAX_VALUE;
+    static int total = 0;
+    static int average = 0;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] nums=new int[10];
+
+        for(int i=0 ; i<10;i++){
+        nums[i]=Integer.parseInt(sc.next());
+        }
+        sc.close();
+
+        for (int num : nums) {
+            total += num;
+        }
+        average = total / 2;
+
+        dfs(nums, 0, 0, 0);
+        System.out.println(res);
+
+    }
+
+    static void dfs(int[] nums, int idx, int count, int currentSum) {
+        // 剪枝条件：如果当前总和超过目标，则停止.考友反馈，去掉可得100%
+        // if (currentSum > targetSum) return;
+
+        // 当我们为一个队伍选择了5名玩家时
+        if (count == 5) {
+            // 计算另一个队伍的总和
+            int otherTeamSum = average - currentSum;
+            // 用较小的差值更新结果
+            res = Math.min(res, Math.abs(currentSum - otherTeamSum));
+            return;
+        }
+
+        // 如果我们已经考虑了所有玩家，停止递归
+        if (idx == 10) return;
+
+        // 为第一个队伍选择当前玩家
+        dfs(nums, idx + 1, count + 1, currentSum + nums[idx]);
+
+        // 不为第一个队伍选择当前玩家
+        dfs(nums, idx + 1, count, currentSum);
+    }
+
 }
+
+
+
+
