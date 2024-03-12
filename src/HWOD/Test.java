@@ -1,4 +1,4 @@
-package HWOD.C;
+package HWOD;
 
 public class Test {
     public static void main(String[] args) {

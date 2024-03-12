@@ -22,5 +22,106 @@ package HWOD.B.B200;
 //        如果释放不存在的首地址则输出error。
 
 
+import java.util.*;
+
 public class Q1green {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        sc.nextLine(); // 读取换行符
+
+        Q1green.MemoryPool pool = new Q1green.MemoryPool(); // 创建内存池对象
+
+        for (int i = 0; i < n; ++i) {
+            String str = sc.nextLine();
+
+            String cmd = str.split("=")[0]; // 获取命令
+            int num = Integer.parseInt(str.split("=")[1]);     // 获取数字参数
+
+            if (cmd.equals("REQUEST")) {        // 如果是请求内存的命令
+                int result = pool.request(num); // 调用内存池对象的request方法
+                if (result != -1) { // 如果成功分配到内存
+                    System.out.println(result); // 输出分配到的内存地址
+                } else { // 如果没有分配到内存
+                    System.out.println("error"); // 输出错误信息
+                }
+            } else { // 如果是释放内存的命令
+                boolean result = pool.release(num);
+                if (!result) { // 调用内存池对象的release方法，并检查是否释放成功
+                    System.out.println("error"); // 如果释放失败，输出错误信息
+                }
+            }
+        }
+        sc.close();
+    }
+
+    static class MemoryPool {           //？？？？？？？
+        private final int maxSize = 100; // 内存池总大小
+        private final List<Boolean> m_status; // true时表示已被分配
+        private final Map<Integer, Integer> m_used; // key为分配的首地址， value为分配的长度
+
+        public MemoryPool() {
+            // 初始化内存池中每个地址的状态都是未分配状态
+            m_status = new ArrayList<>(Collections.nCopies(maxSize, false));
+            m_used = new HashMap<>();
+        }
+
+        public int request(int size) {
+            int ans = -1;
+            if (size <= 0) {
+                return ans;
+            }
+            for (int i = 0; i <= maxSize - size; ++i) {
+                int j = 0;
+                while (j < size) {
+                    if (m_status.get(i + j)) { // 如果当前地址已经被分配，跳出循环
+                        break;
+                    }
+                    j++;
+                }
+                if (j == size) { // 如果循环到了size，说明可以分配地址
+                    ans = i;
+                    break;
+                }
+            }
+
+            if (ans == -1) { // 如果没有找到合适的地址，返回-1
+                return ans;
+            }
+
+            // 将找到的地址标记为已分配状态
+            m_used.put(ans, size);
+            for (int i = 0; i < size; ++i) {
+                m_status.set(i + ans, true);
+            }
+
+            return ans;
+        }
+
+        public boolean release(int startAddr) {
+            if (!m_used.containsKey(startAddr)) { // 如果该地址没有被分配，返回false
+                return false;
+            }
+
+            // 将该地址标记为未分配状态
+            int size = m_used.get(startAddr);
+            for (int i = startAddr; i < startAddr + size; ++i) {
+                m_status.set(i, false);
+            }
+
+            // 从m_used中删除该地址
+            m_used.remove(startAddr);
+
+            return true;
+        }
+    }
+
 }
+
+
+
+
+
+
+
+

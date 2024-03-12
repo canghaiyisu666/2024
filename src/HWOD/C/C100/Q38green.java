@@ -19,5 +19,45 @@ package HWOD.C.C100;
 //    输出描述
 //        输出int类型的返回值，表示最大可购买的宝石数量。
 
+import java.util.Scanner;
+
 public class Q38green {
+    public static void main(String[] args) {
+        // 创建一个 Scanner 对象来读取输入
+        Scanner sc = new Scanner(System.in);
+        // 读取宝石的数量
+        int n = sc.nextInt();
+        // 创建一个数组来存储每个宝石的价格
+        int[] gems = new int[n];
+        // 读取每个宝石的价格
+        for (int i = 0; i < n; i++) {
+            gems[i] = sc.nextInt();
+        }
+        // 读取你拥有的钱的总面值
+        int maxMoney = sc.nextInt();
+        sc.close();
+
+        // 初始化滑动窗口的左右边界和窗口内宝石的总价
+        int left = 0, right = 0, sum = 0;
+        // 初始化最大可购买的宝石数量
+        int max = 0;
+        // 当滑动窗口的右边界没有超过宝石数量时，继续循环
+        while (right < gems.length) {
+            // 将右边界的宝石价格加到总价中
+            sum += gems[right];
+            // 当总价超过你拥有的钱时，将左边界的宝石价格从总价中减去，并将左边界向右移动
+            while (sum > maxMoney) {
+                sum -= gems[left];
+                left++;
+            }
+            // 更新最大可购买的宝石数量
+            max = Math.max(max, right - left + 1);
+            // 将右边界向右移动
+            right++;
+        }
+        // 输出最大可购买的宝石数量
+        System.out.println(max);
+    }
 }
+
+
