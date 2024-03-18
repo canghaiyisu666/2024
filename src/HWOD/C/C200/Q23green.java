@@ -20,5 +20,46 @@ package HWOD.C.C200;
 //    输出描述
 //        满足条件的最小的k
 
+import java.util.Scanner;
+
 public class Q23green {
+
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        long x, y, cntX, cntY; // 定义静态变量x, y, cntX, cntY
+
+        x = sc.nextLong(); // 读取国家X的倍数限制
+        y = sc.nextLong(); // 读取国家Y的倍数限制
+        cntX = sc.nextLong(); // 读取国家X需要的员工数量
+        cntY = sc.nextLong(); // 读取国家Y需要的员工数量
+        sc.close(); // 关闭扫描器
+
+        long min = cntX + cntY; // 设置员工ID的最小值，初值为两国需要的员工总数
+        long max = (long) Math.pow(10, 9); // 设置员工ID的最大值
+
+        // 通过二分查找算法找到满足条件的最小员工ID
+        while (min <= max) {
+            long middle = min + (max - min) / 2; // 计算中间值midID
+
+            long noX = middle / x; // 计算在[1, middle]范围内不能去X国的员工数
+            long noY = middle / y; // 计算在[1, middle]范围内不能去Y国的员工数
+            long noXY = middle / (x * y); // 计算在[1, middle]范围内同时不能去X国和Y国的员工数
+
+            long neededX = Math.max(0, cntX - (noY - noXY)); // 计算X国实际需要的员工数???????????
+            long neededY = Math.max(0, cntY - (noX - noXY)); // 计算Y国实际需要的员工数?????????????
+            long totalAvalible = middle - noX - noY + noXY; // 计算总共能使用的员工数
+
+            // 判断当前middle是否满足条件
+            if (neededX + neededY <= totalAvalible) {
+                max = middle - 1; // 如果满足条件，降低最大ID的搜索范围
+            } else {
+                min = middle + 1; // 如果不满足条件，提高最小ID的搜索范围
+            }
+        }
+
+        System.out.println(min); // 输出满足条件的最小员工ID
+
+    }
+
 }
