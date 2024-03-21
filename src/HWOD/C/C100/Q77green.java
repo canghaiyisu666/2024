@@ -1,6 +1,6 @@
 package HWOD.C.C100;
 //  分披萨： 动态规划
-
+//????????????未看
 //  题目描述
 //        "吃货"和"馋嘴"两人到披萨店点了一份铁盘(圆形)披萨，并嘱咐店员将披萨按放射状切成大小相同的偶数个小块。
 //        但是粗心的服务员将披萨切成了每块大小都完全不同奇数块，且肉眼能分辨出大小。
@@ -18,5 +18,59 @@ package HWOD.C.C100;
 //    输出描述
 //        "吃货"能分得到的最大的披萨大小的总和。
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class Q77green {
+    static int n;  // 披萨的数量
+    static int[] a;  // 每块披萨的美味值
+    static int[][] dp;  // 记忆化数组，用于存储已计算过的状态
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();  // 输入披萨的数量
+        a = new int[n];  // 初始化存储每块披萨美味值的数组
+        for (int i = 0; i < n; i++) {
+            a[i] = sc.nextInt();  // 输入每块披萨的美味值
+        }
+        sc.close();
+
+        dp = new int[n][n];  // 初始化记忆化数组，其维度为披萨数量的平方
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);  // 初始化记忆化数组，将所有值设为-1，表示未计算
+        }
+
+        int ans = 0;  // 初始化最大美味值为0
+        // 遍历每块披萨，尝试以每块披萨作为起点计算最大美味值
+        for (int i = 0; i < n; i++) {
+            // 更新最大美味值，allocation函数计算从当前披萨开始的最大美味值
+            ans = Math.max(ans, allocation((i + 1) % n, (i + n - 1) % n) + a[i]);
+        }
+
+        System.out.println(ans);  // 输出最多能吃到的披萨的美味值总和
+    }
+
+    static int allocation(int L, int R) {
+        // 如果当前状态已经计算过，则直接返回结果
+        if (dp[L][R] != -1) {
+            return dp[L][R];
+        }
+        // 根据贪心策略，选择当前美味值较大的披萨
+        if (a[L] > a[R]) {
+            L = (L + 1) % n;  // 如果左边的披萨更美味，则吃掉左边的披萨
+        } else {
+            R = (R + n - 1) % n;  // 如果右边的披萨更美味，则吃掉右边的披萨
+        }
+        // 如果只剩下一块披萨，则直接返回这块披萨的美味值
+        if (L == R) {
+            dp[L][R] = a[L];
+        } else {
+            // 否则，递归计算剩下披萨的最大美味值，并更新记忆化数组
+            dp[L][R] = Math.max(a[L] + allocation((L + 1) % n, R), a[R] + allocation(L, (R + n - 1) % n));
+        }
+        return dp[L][R];  // 返回当前状态下的最大美味值
+    }
 }
+
+
+
