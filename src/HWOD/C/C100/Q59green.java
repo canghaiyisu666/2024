@@ -1,9 +1,9 @@
 package HWOD.C.C100;
-//  小华地图寻宝
+//  小华地图寻宝    DFS深度优先搜索
 //  ??????????????未看
 //  题目描述
 //        小华按照地图去寻宝，地图上被划分成 m 行和n列的方格，横纵坐标范围分别是 [0,n-1]和 [0,m-1]。
-//        在横坐标和纵坐标的数位之和不大于k的方格中存在黄金(每个方格中仅存在一克黄金)，
+//        在横坐标和纵坐标的《数位之和》不大于k的方格中存在黄金(每个方格中仅存在一克黄金)，
 //        但横坐标和纵坐标数位之和大于k的方格存在危险不可进入。
 //        小华从入口(0.0)进入，任何时候只能向左，右，上，下四个方向移动一格请问小华最多能获得多少克黄金?
 //    输入描述
@@ -42,7 +42,7 @@ public class Q59green {
     // 深度优先搜索函数
     private static int dfs(int x, int y) {
         // 判断坐标(x, y)是否越界，或者已经被访问过，或者数位和大于k
-        if (x < 0 || y < 0 || x >= m || y >= n || visited[x][y] || sumOfDigits(x) + sumOfDigits(y) > k) {
+        if (x < 0 || y < 0 || x >= m || y >= n || visited[x][y] || total_bit(x) + total_bit(y) > k) {
             return 0; // 如果是，则返回0，表示这个格子不能访问
         }
         visited[x][y] = true; // 标记当前格子为已访问
@@ -51,7 +51,7 @@ public class Q59green {
     }
 
     // 计算一个数字的数位和
-    private static int sumOfDigits(int num) {
+    private static int total_bit(int num) {
         int sum = 0; // 初始化数位和为0
         while (num > 0) { // 当数字大于0时循环
             sum += num % 10; // 取数字的最后一位加到数位和中
