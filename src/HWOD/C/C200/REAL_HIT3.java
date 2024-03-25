@@ -9,7 +9,9 @@ package HWOD.C.C200;
 //        GEFBIJDHCA GEBFAIDJCH  -> A B C E F D H G I J
 //        CBEFDA CBAEDF-> ABDCEF
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
 
 
 class TreeNode {
@@ -23,7 +25,7 @@ class TreeNode {
     }
 }
 
-public class REAL_HIT {
+public class REAL_HIT3 {
 
     public static void main(String[] args) {
 
@@ -72,7 +74,7 @@ public class REAL_HIT {
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
-            System.out.print(node.val + " ");
+            System.out.print(node.val);
             if (node.left != null) queue.offer(node.left);
             if (node.right != null) queue.offer(node.right);
         }
