@@ -21,7 +21,7 @@ package HWOD.C.C100;
 
 import java.util.Scanner;
 
-public class Q38green {
+public class Q38green_HIT {
     public static void main(String[] args) {
         // 创建一个 Scanner 对象来读取输入
         Scanner sc = new Scanner(System.in);
