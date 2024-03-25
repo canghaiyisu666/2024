@@ -18,7 +18,7 @@ package HWOD.C.C100;
 
 import java.util.Scanner;
 
-public class Q59green_HIT {
+public class Q59green_HIT2 {
     // 定义地图的行数m、列数n以及数位和限制k
     private static int m, n, k;
     // 定义一个二维数组visited，用于标记格子是否已经被访问过
