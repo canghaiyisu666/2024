@@ -6,7 +6,6 @@ package leetcode.classics150;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 public class Q290 {
     public static void main(String[] args) {
@@ -22,15 +21,18 @@ public class Q290 {
             return false;
         }
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < pattern.length(); i++) {
-            if (dic.containsKey(pattern.charAt(i) + "")) {
-                if (!dic.get(pattern.charAt(i) + "").equals(words[i])) {
+        for (int i = 0; i < words.length; i++) {
+            if (dic.containsKey(words[i])) {
+                if (!dic.get(words[i]).equals(pattern.charAt(i) + "")) {
                     return false;
                 }
             }
-            dic.put(pattern.charAt(i) + "", words[i]);
+            dic.put(words[i], pattern.charAt(i) + "");
         }
-        int dic_value_count = (int) dic.entrySet().stream().map(Map.Entry::getValue).distinct().count();
+        int dic_value_count = (int) dic.entrySet().stream()
+                .map(Map.Entry::getValue)
+                .distinct()
+                .count();
         if (dic.keySet().size() != dic_value_count) {  //value去重后， 如果和key的数量不同， 也不匹配
             return false;
         }
