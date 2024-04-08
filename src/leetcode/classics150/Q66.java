@@ -4,7 +4,7 @@ public class Q66 {
     public static void main(String[] args) {
         int[] digits = {9, 9, 9, 9, 9, 9};
         int[] result = plusOne(digits);
-        for (int i : result){
+        for (int i : result) {
             System.out.println(i);
         }
     }
@@ -16,9 +16,9 @@ public class Q66 {
             if (digits[i] != 0)
                 return digits;
         }
-        digits = new int[digits.length + 1];
-        digits[0] = 1;
-        return digits;
+        int[] result = new int[digits.length + 1];
+        result[0] = 1;
+        return result;
     }
 
 }
