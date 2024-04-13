@@ -11,21 +11,21 @@ public class Q35 {
     }
 
     public static int searchInsert(int[] nums, int target) {//超出时间限制
-        int i = 0, j = nums.length - 1;
-        while (i <= j) {
-            if (i == j) {
-                if (target < i) {
-                    return i - 1;
-                } else return i + 1;
-            }
-            int m = (i + j) >>> 1;  //用/2可能会变成负数，当i+j很大但没有超过int限制的时候。
-            if (nums[m] < target) {
-                i = m;
-            } else if (target < nums[m]) {
-                j = m - 1;
-            } else return m;
-        }
+        int i = 0;
+        int j = nums.length - 1;
 
-        return -1;
+        while (i <= j) {
+            int mid = (i + j) >>> 1;
+            int midVal = nums[mid];
+
+            if (midVal < target)
+                i = mid + 1;
+            else if (midVal > target)
+                j = mid - 1;
+            else
+                return mid; // key found
+        }
+        return i;
+
     }
 }
