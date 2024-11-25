@@ -37,6 +37,7 @@ public class TestBinarySearch {
         int m = (i + j) / 2;
         // 模拟第二次求中间索引, target 在右侧
         i = m + 1;
+        System.out.println(i+j);
         assertEquals(1073741824, i);
         assertEquals(2147483646, j);
         assertEquals(-1073741826, i + j);
