@@ -1,4 +1,4 @@
-package TeacherWu;
+package main.java.TeacherWu;
 
 //给定一个二进制数组 nums ， 计算其中最大连续 1 的个数。
 //
@@ -14,8 +14,6 @@ package TeacherWu;
 //        提示：
 //        1 <= nums.length <= 10^5
 //        nums[i] 不是 0 就是 1
-
-import java.util.Scanner;
 
 public class D2_lc485 {
     public static void main(String[] args) {
